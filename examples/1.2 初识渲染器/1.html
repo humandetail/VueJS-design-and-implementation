@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>初识渲染器</title>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/javascript">
+    const container = document.querySelector('#root')
+
+    const vnode = {
+      tag: 'div',
+      props: {
+        onClick: () => console.log('Hello world.')
+      },
+      children: 'Click me'
+    }
+
+    function renderer (vnode, container) {
+      const el = document.createElement(vnode.tag)
+
+      // 处理属性
+      for (let key in vnode.props) {
+        // 如果是以 on 开头，说明是一个事件
+        if (/^on/.test(key)) {
+          el.addEventListener(
+            key.substr(2).toLowerCase(),
+            vnode.props[key]
+          )
+        }
+      }
+
+      // 处理 children
+      if (typeof vnode.children === 'string') {
+        el.appendChild(document.createTextNode(vnode.children))
+      } else if (Array.isArray(vnode.children)) {
+        // 递归调用 renderer 来渲染子节点
+        vnode.children.forEach(child => renderer(child, el))
+      }
+
+      container.appendChild(el)
+    }
+
+    renderer(vnode, container)
+  </script>
+</body>
+</html>
