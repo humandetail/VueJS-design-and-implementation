@@ -51,7 +51,9 @@ const bucket = new WeakMap()
 let ITERATE_KEY = Symbol()
 const RAW = 'RAW'
 
-function reactive (obj) {
+// 封装 createReactive() 函数，多接收一个参数 isShallow，代表是否为浅响应，默认为 false
+// 增加第三个参数，isReadonly 代表是否为只读，默认为 false
+function createReactive (obj, isShallow = false, isReadonly = false) {
   return new Proxy(obj, {
     // 拦截读取操作
     get (target, key, receiver) {
@@ -59,15 +61,37 @@ function reactive (obj) {
       if (key === Symbol.for(RAW)) {
         return target
       }
-
-      track(target, key)
+      // 非只读的时候才需要建立响应联系
+      if (!isReadonly) {
+        track(target, key)
+      }
   
-      // 返回属性值
-      return Reflect.get(target, key, receiver)
+      // 得到原始值结果
+      const res = Reflect.get(target, key, receiver)
+
+      // 如果是浅响应，直接返回原始值
+      if (isShallow) {
+        return res
+      }
+
+      if (typeof res === 'object' && res !== null) {
+        // 如果数据是只读，则调用 readonly 对值进行包装
+        return isReadonly
+          ? readonly(res)
+          : reactive(res)
+      }
+
+      return res
     },
   
     // 拦截设置操作
     set (target, key, newVal, receiver) {
+      // 如果是只读的，则打印警告信息
+      if (isReadonly) {
+        console.warn(`属性 ${key} 是只读的`)
+        return true
+      }
+
       // 先获取旧值
       const oldVal = target[key]
 
@@ -106,6 +130,12 @@ function reactive (obj) {
     },
 
     deleteProperty (target, key) {
+      // 如果是只读的，则打印警告信息
+      if (isReadonly) {
+        console.warn(`属性 ${key} 是只读的`)
+        return true
+      }
+
       // 检查被操作的属性是否是对象自己的属性
       const hadKey = Object.prototype.hasOwnProperty.call(target, key)
       
@@ -124,6 +154,22 @@ function reactive (obj) {
       Reflect.apply(target, thisArg, argsList)
     }
   })
+}
+
+function reactive (obj) {
+  return createReactive(obj)
+}
+
+function shallowReactive (obj) {
+  return createReactive(obj, true)
+}
+
+function readonly (obj) {
+  return createReactive(obj, false, true /* 只读 */)
+}
+
+function shallowReadonly (obj) {
+  return createReactive(obj, true /* shallow */, true /* 只读 */)
 }
 
 function track (target, key) {

@@ -7,19 +7,54 @@
   <title>Document</title>
 </head>
 <body>
-  <script src="1.js"></script>
+  <!-- <script src="1.js"></script>
   <script>
-    const obj = { foo: NaN, bar: 2 }
+    // const obj = { foo: NaN, bar: 2 }
 
-    const p1 = reactive(obj)
+    // const p1 = reactive(obj)
+
+    // effect(() => {
+    //   for (const key in p1) {
+    //     console.log(key)
+    //   }
+    // })
+
+    // p1.foo = NaN
+
+
+     const obj = { name: 'obj' }
+     const proto = { name: 'proto', bar: 1 }
+     const child = reactive(obj)
+     child.name = 'child'
+     const parent = reactive(proto)
+     parent.name = 'parent'
+     // 使用 parent 作为 child 的原型
+     Object.setPrototypeOf(child, parent)
+
+     effect(() => {
+      console.log(child.bar)
+     })
+
+     child.bar = 2
+
+     console.log(child[Symbol.for(RAW)] === obj)
+     console.log(parent[Symbol.for(RAW)] === proto)
+  </script> -->
+
+  <script src="2.js"></script>
+  <script>
+    const obj = {
+      foo: {
+        bar: 1
+      }
+    }
+    const p = reactive(obj)
 
     effect(() => {
-      for (const key in p1) {
-        console.log(key)
-      }
+      console.log(p.foo.bar)
     })
 
-    p1.foo = NaN
+    p.foo.bar = 2
   </script>
 </body>
 </html>

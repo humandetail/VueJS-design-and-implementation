@@ -51,7 +51,8 @@ const bucket = new WeakMap()
 let ITERATE_KEY = Symbol()
 const RAW = 'RAW'
 
-function reactive (obj) {
+// 封装 createReactive() 函数，多接收一个参数 isShallow，代表是否为浅响应，默认为 false
+function createReactive (obj, isShallow = false) {
   return new Proxy(obj, {
     // 拦截读取操作
     get (target, key, receiver) {
@@ -62,8 +63,19 @@ function reactive (obj) {
 
       track(target, key)
   
-      // 返回属性值
-      return Reflect.get(target, key, receiver)
+      // 得到原始值结果
+      const res = Reflect.get(target, key, receiver)
+
+      // 如果是浅响应，直接返回原始值
+      if (isShallow) {
+        return res
+      }
+
+      if (typeof res === 'object' && res !== null) {
+        return reactive(res)
+      }
+
+      return res
     },
   
     // 拦截设置操作
@@ -124,6 +136,14 @@ function reactive (obj) {
       Reflect.apply(target, thisArg, argsList)
     }
   })
+}
+
+function reactive (obj) {
+  return createReactive(obj)
+}
+
+function shallowReactive (obj) {
+  return createReactive(obj, true)
 }
 
 function track (target, key) {
