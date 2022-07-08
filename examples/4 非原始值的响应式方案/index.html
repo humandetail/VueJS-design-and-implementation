@@ -41,7 +41,7 @@
      console.log(parent[Symbol.for(RAW)] === proto)
   </script> -->
 
-  <script src="2.js"></script>
+  <!-- <script src="2.js"></script>
   <script>
     const obj = {
       foo: {
@@ -55,6 +55,25 @@
     })
 
     p.foo.bar = 2
+  </script> -->
+
+  <script src="5.js"></script>
+  <script>
+    const arr = reactive([1, 2, 3, 4, 5])
+
+    effect(() => {
+      for (const key in arr)
+      console.log(`for...in：${key}`)
+    })
+
+    effect(() => {
+      for (const value of arr) {
+        console.log(`for...of：${value}`)
+      }
+    })
+
+    arr[0] = 10
+    arr.length = 0
   </script>
 </body>
 </html>
