@@ -91,7 +91,7 @@
     console.log('lastIndexOf proxy', arr.lastIndexOf(arr[0]))
   </script> -->
 
-  <script src="7.js"></script>
+  <!-- <script src="7.js"></script>
   <script>
     const arr = reactive([])
 
@@ -102,6 +102,88 @@
     effect(() => {
       arr.push(2)
     })
+  </script> -->
+
+  <!-- <script>
+    const s = new Set([1, 2, 3])
+    const p = new Proxy(s, {
+      get (target, key, receiver) {
+        if (key === 'size') {
+          // 如果读取的是 size 属性，
+          // 指定 receiver 为原始对象 target
+          return Reflect.get(target, key, target)
+        }
+
+        // 将方法与原始数据对象 target 绑定后返回
+        return target[key].bind(target)
+      }
+    })
+
+    p.delete(1)
+  </script> -->
+
+  <script src="8.js"></script>
+  <script>
+    // const p = reactive(new Set([1, 2, 3]))
+    
+    // effect(() => {
+    //   console.log(p.size)
+    // })
+
+    // p.add(1)
+
+    // const p = reactive(new Map([['key', 1]]))
+
+    // effect(() => {
+    //   console.log(p.get('key'))
+    // })
+
+    // p.set('key', 2)
+
+    // // 污染原始数据
+    // // 原始数据 m
+    // const m = new Map()
+    // // p1 是 m 的代理对象
+    // const p1 = reactive(m)
+    // // p2 是另一个代理对象
+    // const p2 = reactive(new Map())
+
+    // // 为 p1 设置一个键值对，值是代理对象 p2
+    // p1.set('p2', p2)
+
+    // effect(() => {
+    //   // 注意，这里我们通过原始数据 m 来访问 p2
+    //   console.log(m.get('p2').size)
+    // })
+
+    // // 注意，这里我们通过原始数据 m 为 p2 设置一个键值对
+    // m.get('p2').set('foo', 1)
+
+    // const p = reactive(new Map([
+    //   [{key: 1}, { value: 1 }]
+    // ]))
+
+    // effect(() => {
+    //   p.forEach((value, key, m) => {
+    //     console.log(value) // { value: 1 }
+    //     console.log(key) // { key: 1 }
+    //   })
+    // })
+
+    // p.set({key: 2}, { value: 2 }) // 能够触发响应
+
+    const p = reactive(new Map([
+      ['key1', 'value1'],
+      ['key2', 'value2']
+    ]))
+
+    effect(() => {
+      for (const value of p.keys()) {
+        console.log(value)
+      }
+    })
+
+    p.set('key2', 'value3') // 这是一个 SET 的类型，它修改了 key2 的值
   </script>
 </body>
 </html>
