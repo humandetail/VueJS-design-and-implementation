@@ -57,7 +57,7 @@
     p.foo.bar = 2
   </script> -->
 
-  <script src="5.js"></script>
+  <!-- <script src="5.js"></script>
   <script>
     const arr = reactive([1, 2, 3, 4, 5])
 
@@ -74,6 +74,21 @@
 
     arr[0] = 10
     arr.length = 0
+  </script> -->
+
+  <script src="6.js"></script>
+  <script>
+    const obj = {}
+    const arr = reactive([obj])
+
+    console.log('includes origin', arr.includes(obj))
+    console.log('includes proxy', arr.includes(arr[0]))
+
+    console.log('indexOf origin', arr.indexOf(obj))
+    console.log('indexOf proxy', arr.indexOf(arr[0]))
+
+    console.log('lastIndexOf origin', arr.lastIndexOf(obj))
+    console.log('lastIndexOf proxy', arr.lastIndexOf(arr[0]))
   </script>
 </body>
 </html>
