@@ -76,7 +76,7 @@
     arr.length = 0
   </script> -->
 
-  <script src="6.js"></script>
+  <!-- <script src="6.js"></script>
   <script>
     const obj = {}
     const arr = reactive([obj])
@@ -89,6 +89,19 @@
 
     console.log('lastIndexOf origin', arr.lastIndexOf(obj))
     console.log('lastIndexOf proxy', arr.lastIndexOf(arr[0]))
+  </script> -->
+
+  <script src="7.js"></script>
+  <script>
+    const arr = reactive([])
+
+    effect(() => {
+      arr.push(1)
+    })
+
+    effect(() => {
+      arr.push(2)
+    })
   </script>
 </body>
 </html>
