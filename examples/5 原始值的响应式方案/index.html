@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script src="../4 非原始值的响应式方案/8.js"></script>
+
+  <script src="1.js"></script>
+
+  <script>
+    // const refVal = ref(1)
+    // effect(() => {
+    //   console.log(refVal.value)
+    // })
+
+    // refVal.value = 2
+
+    const obj = reactive({ foo: 1, bar: 2 })
+
+    const newObj = {
+      foo: {
+        get value () {
+          return obj.foo
+        }
+      },
+
+      var: {
+        get value () {
+          return obj.bar
+        }
+      }
+    }
+
+    effect(() => {
+      console.log(newObj.foo)
+    })
+
+    obj.foo = 10
+  </script>
+</body>
+</html>
