@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>渲染器的设计</title>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script src="https://unpkg.com/@vue/reactivity@3.2.37/dist/reactivity.global.js"></script>
+
+  <script src="1.js"></script>
+
+  <script>
+    // function renderer (domString, container) {
+    //   container.innerHTML = domString
+    // }
+
+    // const { effect, ref } = VueReactivity
+
+    // const count = ref(1)
+
+    // effect(() => {
+    //   renderer(`<h1>${count.value}</h1>`, document.getElementById('app'))
+    // })
+
+    // count.value++
+
+    const vnode = {
+      type: 'h1',
+      children: 'hello'
+    }
+
+    // 在创建 renderer 时传入配置项
+    const renderer = createRenderer({
+      // 用于创建元素
+      createElement(tag) {
+        return document.createElement(tag)
+      },
+      // 用于设置元素的文本节点
+      setElementText (el, text) {
+        el.textContent = text
+      },
+      // 用于在给定的 parent 下添加指定元素
+      insert (el, parent, anchor = null) {
+        parent.insertBefore(el, anchor)
+      }
+    })
+
+    renderer.render(vnode, document.querySelector('#app'))
+  </script>
+</body>
+</html>
