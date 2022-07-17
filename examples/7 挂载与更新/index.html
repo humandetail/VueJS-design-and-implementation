@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>挂载与更新</title>
+</head>
+<body>
+  <div id="app"></div>
+  <input type="text" id="my-input" value="foo" />
+
+  <script src="../../@vue/reactivity.js"></script>
+  <!-- <script src="2.js"></script>
+
+  <script>
+    const vnode = {
+      type: 'div',
+      // 使用 props 描述一个元素的属性
+      props: {
+        id: 'foo'
+      },
+      children: [
+        {
+          type: 'p',
+          children: 'hello'
+        }
+      ]
+    }
+
+    renderer.render(vnode, document.querySelector('#app'))
+  </script> -->
+
+  <script src="3.js"></script>
+  <script>
+    const class1 = normalizeClass('foo bar')
+    const class2 = normalizeClass({
+      foo: true,
+      bar: false
+    })
+    const class3 = normalizeClass([
+      'foo bar',
+      {
+        baz: true
+      }
+    ])
+
+    console.log('class1', class1)
+    console.log('class2', class2)
+    console.log('class3', class3)
+  </script>
+</body>
+</html>
