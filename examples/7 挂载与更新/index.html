@@ -31,7 +31,7 @@
     renderer.render(vnode, document.querySelector('#app'))
   </script> -->
 
-  <script src="3.js"></script>
+  <!-- <script src="3.js"></script>
   <script>
     const class1 = normalizeClass('foo bar')
     const class2 = normalizeClass({
@@ -48,6 +48,38 @@
     console.log('class1', class1)
     console.log('class2', class2)
     console.log('class3', class3)
+  </script> -->
+
+  <script src="6.js"></script>
+  <script>
+    const { effect, ref } = VueReactivity
+
+    const bol = ref(false)
+
+    effect(() => {
+      const vnode = {
+        type: 'div',
+        props: bol.value ? {
+          onClick: () => {
+            alert('父元素 clicked')
+          }
+        } : {},
+        children: [
+          {
+            type: 'p',
+            props: {
+              onClick: () => {
+                bol.value = true
+              }
+            },
+            children: 'text'
+          }
+        ]
+      }
+      // 渲染 vnode
+      renderer.render(vnode, document.querySelector('#app'))
+    })
+
   </script>
 </body>
 </html>
