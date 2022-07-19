@@ -50,7 +50,7 @@
     console.log('class3', class3)
   </script> -->
 
-  <script src="6.js"></script>
+  <!-- <script src="6.js"></script>
   <script>
     const { effect, ref } = VueReactivity
 
@@ -80,6 +80,40 @@
       renderer.render(vnode, document.querySelector('#app'))
     })
 
+  </script> -->
+
+  <script src="7.js"></script>
+  <script>
+    const { ref, effect } = VueReactivity
+    const val = ref({
+      comment: '这里是注释节点',
+      text: '这是文本节点'
+    })
+
+    effect(() => {
+      const vnode = {
+        type: VNODE_TYPES.Fragment,
+        children: [
+          {
+            type: VNODE_TYPES.Comment,
+            children: val.value.comment
+          },
+          {
+            type: VNODE_TYPES.Text,
+            children: val.value.text
+          }
+        ]
+      }
+
+      renderer.render(vnode, document.querySelector('#app'))
+    })
+
+    setTimeout(() => {
+      val.value = {
+        comment: '这是 comment 节点',
+        text: '这是 text 节点'
+      }
+    }, 5000)
   </script>
 </body>
 </html>
