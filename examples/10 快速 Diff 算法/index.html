@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>快速 Diff 算法</title>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script src="../../@vue/reactivity.js"></script>
+
+  <script src="3.js"></script>
+
+  <!-- <script>
+    const { ref, effect } = VueReactivity
+
+    const children = ref([
+      { type: 'p', children: '1', key: 1 },
+      { type: 'p', children: '2', key: 2 },
+      { type: 'p', children: '3', key: 3 }
+    ])
+
+    effect(() => {
+      const vnode = ref({
+        type: 'div',
+        children: children.value
+      })
+      renderer.render(vnode.value, document.querySelector('#app'))
+    })
+
+    // setTimeout(() => {
+    //   children.value = [
+    //     { type: 'p', children: '1', key: 1 },
+    //     { type: 'p', children: '4', key: 4 },
+    //     { type: 'p', children: '2', key: 2 },
+    //     { type: 'p', children: '3', key: 3 }
+    //   ]
+    // }, 2000)
+
+    setTimeout(() => {
+      children.value = [
+        { type: 'p', children: '1', key: 1 },
+        { type: 'p', children: '3', key: 3 }
+      ]
+    }, 2000)
+  </script> -->
+
+  <script>
+    const { ref, effect } = VueReactivity
+
+    const children = ref([
+      { type: 'p', children: '1', key: 1 },
+      { type: 'p', children: '2', key: 2 },
+      { type: 'p', children: '3', key: 3 },
+      { type: 'p', children: '4', key: 4 },
+      { type: 'p', children: '6', key: 6 },
+      { type: 'p', children: '5', key: 5 }
+    ])
+
+    effect(() => {
+      const vnode = ref({
+        type: 'div',
+        children: children.value
+      })
+      renderer.render(vnode.value, document.querySelector('#app'))
+    })
+
+    setTimeout(() => {
+      children.value = [
+        { type: 'p', children: '1', key: 1 },
+        { type: 'p', children: '3', key: 3 },
+        { type: 'p', children: '4', key: 4 },
+        { type: 'p', children: '2', key: 2 },
+        { type: 'p', children: '7', key: 7 },
+        { type: 'p', children: '5', key: 5 }
+      ]
+    }, 2000)
+  </script>
+</body>
+</html>
