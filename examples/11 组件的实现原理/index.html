@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>组件的实现原理</title>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script src="../../@vue/reactivity.js"></script>
+
+  <script>
+    const { shallowReactive, shallowReadonly, reactive, effect, ref } = VueReactivity
+  </script>
+
+  <script src="3.js"></script>
+
+  <script>
+    // const MyComponent = {
+    //   type: 'div',
+    //   children: 'Hello world'
+    // }
+
+    // renderer.render(MyComponent, document.querySelector('#app'))
+
+    
+    // const MyComponent = {
+    //   data () {
+    //     return {
+    //       count: 1
+    //     }
+    //   },
+
+    //   render () {
+    //     return {
+    //       type: 'div',
+    //       children: `count is: ${this.count}`
+    //     }
+    //   }
+    // }
+
+    // renderer.render({ type: MyComponent }, document.querySelector('#app'))
+
+
+    // const MyComponent = {
+    //   data () {
+    //     return {
+    //       count: 1
+    //     }
+    //   },
+
+    //   mounted () {
+    //     console.log('mounted', this.count)
+    //   },
+
+    //   render () {
+    //     return {
+    //       type: 'div',
+    //       children: `count is: ${this.count}`
+    //     }
+    //   }
+    // }
+
+    // renderer.render({ type: MyComponent }, document.querySelector('#app'))
+    
+    const MyComponent = {
+      data () {
+        return {
+          count: 1
+        }
+      },
+
+      setup () {
+
+        onMounted(() => {
+          console.log('mounted 1')
+        })
+
+        onMounted(() => {
+          console.log('mounted 2')
+        })
+
+        return function () {
+          return {
+            type: 'div',
+            children: `count is: ${this.count}`
+          }
+        }
+      }
+    }
+
+    renderer.render({ type: MyComponent }, document.querySelector('#app'))
+
+    // 大部分例子都跑不通啊。。。。。。。。。。。。。。。f**k
+  </script>
+</body>
+</html>
