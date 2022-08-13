@@ -7,24 +7,52 @@
   <title>Document</title>
 </head>
 <body>
-  <script src="1.js"></script>
+  <script src="3.js"></script>
   <script>
-    const tokens = tokenzie(`<p>Vue</p>`)
-    console.log(tokens)
-    // [
-    //   {
-    //     "type": "tag",
-    //     "name": "p"
-    //   },
-    //   {
-    //     "type": "text",
-    //     "content": "Vue"
-    //   },
-    //   {
-    //     "type": "tagEnd",
-    //     "name": "p"
-    //   }
-    // ]
+    // const tokens = tokenize(`<p>Vue</p>`)
+    // console.log(tokens)
+    // // [
+    // //   {
+    // //     "type": "tag",
+    // //     "name": "p"
+    // //   },
+    // //   {
+    // //     "type": "text",
+    // //     "content": "Vue"
+    // //   },
+    // //   {
+    // //     "type": "tagEnd",
+    // //     "name": "p"
+    // //   }
+    // // ]
+
+    // const tokens = tokenize(`<div><p>Vue</p><p>Template</p></div>`)
+    // console.log(tokens)
+    // // [
+    // //   { type: 'tag', name: 'div' },           // div 开始标签节点
+    // //   { type: 'tag', name: 'p' },             // p 开始标签节点
+    // //   { type: 'text', content: 'Vue' },       // 文本节点
+    // //   { type: 'tagEnd', name: 'p' },          // p 结束标签节点
+    // //   { type: 'tag', name: 'p' },             // p 开始标签节点
+    // //   { type: 'text', content: 'Template' },  // 文本节点
+    // //   { type: 'tagEnd', name: 'p' },          // p 结束标签节点
+    // //   { type: 'tagEnd', name: 'div' }         // div 结束标签节点
+    // // ]
+
+    // const ast = parse(`<div><p>Vue</p><p>Template</p></div>`)
+    // console.log(ast)
+
+    // const ast = parse(`<div><p>Vue</p><p>Template</p></div>`)
+    // dump(ast)
+
+    // const ast = parse(`<div><p>Vue</p><p>Template</p></div>`)
+    // transform(ast)
+
+    // const ast = parse(`<div><p>Vue</p><p>Template</p></div>`)
+    // transform(ast)
+
+    const code = compile(`<div><p>Vue</p><p>Template</p></div>`)
+    console.log(code)
   </script>
 </body>
 </html>

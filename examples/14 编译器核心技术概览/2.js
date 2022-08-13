@@ -241,11 +241,19 @@ function parse (str) {
 function traverseNode (ast, context) {
   context.currentNode = ast
 
+  // 1. 增加退出阶段的回调函数数组
+  const exitFns = []
+
   // context.nodeTransforms 是一个数组，其中每一个元素都是一个函数
   const transforms = context.nodeTransforms
   for (let i = 0; i < transforms.length; i++) {
-    // 将当前节点和 context 都传递给回调函数
-    transforms[i](context.currentNode, context)
+    // 2. 转换函数可以返回另外一个函数，该函数即作为退出阶段的回调函数
+    const onExit = transforms[i](context.currentNode, context)
+    if (onExit) {
+      // 将退出阶段的回调函数添加到 exitFns 数组中
+      exitFns.push(onExit)
+    }
+
     // 由于任何转换函数都可能移除当前节点，因此每个转换函数执行完毕后
     // 都应该检查当前节点是否已经被移除，如果被移除了，直接返回即可
     if (!context.currentNode) return
@@ -262,6 +270,13 @@ function traverseNode (ast, context) {
       // 递归调用时，将 context 透传
       traverseNode(children[i], context)
     }
+  }
+
+  // 在节点处理的最后阶段执行缓存到 exitFns 中的回调函数
+  // 注意，这里我们要逆序执行
+  let i = exitFns.length
+  while (i--) {
+    exitFns[i]()
   }
 }
 
