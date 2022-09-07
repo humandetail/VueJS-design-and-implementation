@@ -7,10 +7,23 @@
   <title>解析器</title>
 </head>
 <body>
-  <script src="./2.js"></script>
+  <script src="./3.js"></script>
   <script>
-    const ast = parse(`<div>A&ltccbbbText</div>`)
+    // const ast = parse(`<div>A&ltccbbbText</div>`)
 
+    // console.log(ast)
+
+    // const ast = parse(`<div>A&ltccbB&#60;bbTC&#x3c;ext</div>`)
+    // console.log(ast)
+    
+
+    const ast = parse(`
+      <div>
+        <p>A&ltccbB&#60;bbTC&#x3c;ext</p>
+        <!-- 这里是注释 -->
+        <p>{{ foo.bar }}</p>
+      </div>
+    `)
     console.log(ast)
   </script>
 </body>
